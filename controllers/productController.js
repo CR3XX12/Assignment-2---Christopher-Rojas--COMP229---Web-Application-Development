@@ -10,11 +10,33 @@ const createProduct = async (req, res) => {
 };
 
 const getProducts = async (req, res) => {
-    Product.find({}).then(result => {
-        res.json({ result })
+    var keyword = req.query.name;
 
-    })
+    if (keyword == null) {
+        Product.find({}).then(result => {
+            res.json({ result })
+    
+        })
+    }
+    else {
+        try {
+            keyword = keyword.replace('[','').replace(']','').trim();
+            const products = await Product.find({
+                name: { $regex: keyword, $options: 'i' }
+            });
+            
+            res.status(200).json(products);
+        }
+        catch (err) {
+            console.error(err);
+            res.status(500).json({ message: 'Server error while fetching products.' });
+        }
+    }
 };
+
+
+
+
 
 const getProductById = async (req, res) => {
     const params = req.params;
