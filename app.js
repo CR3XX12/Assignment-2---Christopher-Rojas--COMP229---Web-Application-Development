@@ -19,7 +19,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/api', apiRouter);
 
-const mongoURI = 'mongodb://127.0.0.1:27017/DressStore';
+const mongoURI = 'mongodb+srv://crex71228:Demonio$1@cluster0.qvapcsa.mongodb.net/DressStore?retryWrites=true&w=majority';
 
 
 mongoose.connect(mongoURI)
